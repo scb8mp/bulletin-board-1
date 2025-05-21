@@ -1,9 +1,41 @@
 <div>
   <div>
     <h1>
-      Board #<%= @the_board.id %> details
+    <%= @the_board.name %> 
     </h1>
 
+
+<h2>Add a new post
+</h2>
+
+<form action="/insert_post" method="post">
+  <div>
+    <label for="title_field">Title</label>
+    <input id="title_field" type="text" name="title">
+  </div>
+
+  <div>
+    <label for="body_field">Body</label>
+    <textarea id="body_field" name="body"></textarea>
+  </div>
+
+  <div>
+    <label for="expires_on_field">Expires on</label>
+    <input id="expires_on_field" type="date" name="expires_on">
+  </div>
+
+  <input type="hidden" name="board_id" value="<%= @the_board.id %>">
+
+  <button type="submit">Add post</button>
+</form>
+    
+    <h2>Active Posts</h2>
+
+<ul>
+  <% Post.where(board_id: @the_board.id).each do |post| %>
+    <li><%= post.title %></li>
+  <% end %>
+</ul>
     <div>
       <div>
         <a href="/boards">
@@ -11,12 +43,7 @@
         </a>
       </div>
 
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
-    </div>
+
 
     <dl>
       <dt>
